@@ -1,0 +1,80 @@
+{
+  "ageConversion": {
+    "cat": {
+      "breakpoints": [
+        { "petAge": 1, "humanAge": 15 },
+        { "petAge": 2, "humanAge": 24 },
+        { "petAge": 3, "humanAge": 28 },
+        { "petAge": 4, "humanAge": 32 },
+        { "petAge": 5, "humanAge": 36 }
+      ],
+      "perYearAfter": 4
+    },
+    "dog": {
+      "small":  { "label": "small",  "maxWeightKg": 9,  "breakpoints": [ {"petAge":1,"humanAge":15}, {"petAge":2,"humanAge":24}, {"petAge":3,"humanAge":28} ], "perYearAfter": 4 },
+      "medium": { "label": "medium", "maxWeightKg": 22, "breakpoints": [ {"petAge":1,"humanAge":15}, {"petAge":2,"humanAge":24}, {"petAge":3,"humanAge":28} ], "perYearAfter": 5 },
+      "large":  { "label": "large",  "maxWeightKg": 40, "breakpoints": [ {"petAge":1,"humanAge":14}, {"petAge":2,"humanAge":22}, {"petAge":3,"humanAge":28} ], "perYearAfter": 6 },
+      "giant":  { "label": "giant",  "maxWeightKg": 999,"breakpoints": [ {"petAge":1,"humanAge":12}, {"petAge":2,"humanAge":20}, {"petAge":3,"humanAge":28} ], "perYearAfter": 7 }
+    }
+  },
+  "calorie": {
+    "RER_factor": 70,
+    "RER_exponent": 0.75,
+    "activityMultipliers": {
+      "intact_adult": 1.6,
+      "neutered_adult": 1.4,
+      "weight_loss": 1.0,
+      "weight_gain": 1.7,
+      "active_working": 2.0,
+      "senior": 1.2,
+      "growth_puppy_kitten": 2.5
+    },
+    "kcalPerGramDryFood": 3.5
+  },
+  "toxicFoods": [
+    {"name": {"en":"Chocolate","zh-CN":"巧克力","zh-TW":"巧克力"}, "dog":"severe", "cat":"severe", "note":{"en":"Contains theobromine; can cause seizures, heart problems.","zh-CN":"含可可碱，可能引起癫痫、心脏问题。","zh-TW":"含可可堿，可能引起癲癇、心臟問題。"}},
+    {"name": {"en":"Grapes & Raisins","zh-CN":"葡萄/葡萄干","zh-TW":"葡萄/葡萄乾"}, "dog":"severe", "cat":"moderate", "note":{"en":"Can cause acute kidney failure in dogs.","zh-CN":"可能导致狗急性肾衰竭。","zh-TW":"可能導致狗急性腎衰竭。"}},
+    {"name": {"en":"Onions & Garlic","zh-CN":"洋葱/大蒜","zh-TW":"洋蔥/大蒜"}, "dog":"moderate", "cat":"severe", "note":{"en":"Damages red blood cells, especially risky for cats.","zh-CN":"破坏红细胞，对猫风险更高。","zh-TW":"破壞紅血球，對貓風險更高。"}},
+    {"name": {"en":"Xylitol (sugar-free gum/candy)","zh-CN":"木糖醇（无糖口香糖/糖果）","zh-TW":"木糖醇（無糖口香糖/糖果）"}, "dog":"severe", "cat":"low", "note":{"en":"Causes rapid insulin release, dangerous low blood sugar.","zh-CN":"引发胰岛素骤增，导致低血糖。","zh-TW":"引發胰島素驟增，導致低血糖。"}},
+    {"name": {"en":"Avocado","zh-CN":"牛油果","zh-TW":"酪梨"}, "dog":"low", "cat":"low", "note":{"en":"Persin can cause GI upset; pit is a choking/blockage hazard.","zh-CN":"鳄梨素可致胃肠不适；果核有窒息/堵塞风险。","zh-TW":"酪梨素可致腸胃不適；果核有噎住/堵塞風險。"}},
+    {"name": {"en":"Macadamia Nuts","zh-CN":"夏威夷果","zh-TW":"夏威夷果"}, "dog":"moderate", "cat":"unknown", "note":{"en":"Causes weakness, tremors in dogs.","zh-CN":"可致狗无力、震颤。","zh-TW":"可致狗無力、震顫。"}},
+    {"name": {"en":"Alcohol","zh-CN":"酒精","zh-TW":"酒精"}, "dog":"severe", "cat":"severe", "note":{"en":"Even small amounts can cause poisoning.","zh-CN":"少量即可致中毒。","zh-TW":"少量即可致中毒。"}},
+    {"name": {"en":"Caffeine (coffee/tea)","zh-CN":"咖啡因（咖啡/茶）","zh-TW":"咖啡因（咖啡/茶）"}, "dog":"severe", "cat":"severe", "note":{"en":"Affects heart and nervous system.","zh-CN":"影响心脏和神经系统。","zh-TW":"影響心臟和神經系統。"}},
+    {"name": {"en":"Raw Yeast Dough","zh-CN":"生酵母面团","zh-TW":"生酵母麵團"}, "dog":"severe", "cat":"severe", "note":{"en":"Expands in stomach and produces alcohol as it ferments.","zh-CN":"在胃中膨胀并发酵产生酒精。","zh-TW":"在胃中膨脹並發酵產生酒精。"}},
+    {"name": {"en":"Bones (cooked)","zh-CN":"熟骨头","zh-TW":"熟骨頭"}, "dog":"moderate", "cat":"moderate", "note":{"en":"Splinters can cause internal injury or blockage.","zh-CN":"碎片可致内伤或堵塞。","zh-TW":"碎片可致內傷或堵塞。"}}
+  ],
+  "toxicPlantsHousehold": [
+    {"name": {"en":"Lily (all true lilies)","zh-CN":"百合（真百合属）","zh-TW":"百合（真百合屬）"}, "dog":"low", "cat":"severe", "note":{"en":"Even small exposure can cause fatal kidney failure in cats.","zh-CN":"猫接触少量即可致命性肾衰竭。","zh-TW":"貓接觸少量即可致命性腎衰竭。"}},
+    {"name": {"en":"Sago Palm","zh-CN":"苏铁（沙哥椰）","zh-TW":"蘇鐵"}, "dog":"severe", "cat":"severe", "note":{"en":"All parts toxic; seeds most dangerous, can cause liver failure.","zh-CN":"全株有毒，种子最危险，可致肝衰竭。","zh-TW":"全株有毒，種子最危險，可致肝衰竭。"}},
+    {"name": {"en":"Tulip & Hyacinth Bulbs","zh-CN":"郁金香/风信子球根","zh-TW":"鬱金香/風信子球根"}, "dog":"moderate", "cat":"moderate", "note":{"en":"Bulbs most concentrated with toxins.","zh-CN":"球根毒素浓度最高。","zh-TW":"球根毒素濃度最高。"}},
+    {"name": {"en":"Essential Oils (tea tree, citrus, etc.)","zh-CN":"精油（茶树、柑橘类等）","zh-TW":"精油（茶樹、柑橘類等）"}, "dog":"moderate", "cat":"severe", "note":{"en":"Cats lack enzymes to metabolize many essential oils.","zh-CN":"猫缺乏代谢多数精油的酶。","zh-TW":"貓缺乏代謝多數精油的酶。"}},
+    {"name": {"en":"Bleach / Chlorine Cleaners","zh-CN":"漂白水/含氯清洁剂","zh-TW":"漂白水/含氯清潔劑"}, "dog":"severe", "cat":"severe", "note":{"en":"Corrosive to mouth, esophagus, stomach.","zh-CN":"对口腔、食道、胃有腐蚀性。","zh-TW":"對口腔、食道、胃有腐蝕性。"}},
+    {"name": {"en":"Aloe Vera (plant)","zh-CN":"芦荟（植株）","zh-TW":"蘆薈（植株）"}, "dog":"low", "cat":"low", "note":{"en":"Saponins/anthraquinones cause vomiting and diarrhea.","zh-CN":"皂苷/蒽醌类可致呕吐腹泻。","zh-TW":"皂苷/蒽醌類可致嘔吐腹瀉。"}},
+    {"name": {"en":"Pothos / Devil's Ivy","zh-CN":"绿萝","zh-TW":"黃金葛"}, "dog":"moderate", "cat":"moderate", "note":{"en":"Calcium oxalate crystals irritate mouth and GI tract.","zh-CN":"草酸钙结晶刺激口腔和肠胃。","zh-TW":"草酸鈣結晶刺激口腔和腸胃。"}},
+    {"name": {"en":"Mothballs (naphthalene)","zh-CN":"樟脑丸（萘）","zh-TW":"樟腦丸（萘）"}, "dog":"severe", "cat":"severe", "note":{"en":"Can cause severe organ damage if ingested.","zh-CN":"误食可致严重器官损伤。","zh-TW":"誤食可致嚴重器官損傷。"}}
+  ],
+  "vaccineSchedule": {
+    "dog": [
+      {"week": 6, "item": {"en":"DHPP (1st)","zh-CN":"犬瘟热/肝炎/细小病毒联苗（第1针）","zh-TW":"犬瘟熱/肝炎/小病毒聯苗（第1針）"}},
+      {"week": 9, "item": {"en":"DHPP (2nd)","zh-CN":"联苗（第2针）","zh-TW":"聯苗（第2針）"}},
+      {"week": 12, "item": {"en":"DHPP (3rd) + Leptospirosis","zh-CN":"联苗（第3针）+ 钩端螺旋体","zh-TW":"聯苗（第3針）+ 鉤端螺旋體"}},
+      {"week": 16, "item": {"en":"Rabies + DHPP (4th)","zh-CN":"狂犬病 + 联苗（第4针）","zh-TW":"狂犬病 + 聯苗（第4針）"}},
+      {"week": 52, "item": {"en":"Annual booster + Rabies booster","zh-CN":"年度加强针 + 狂犬病加强针","zh-TW":"年度加強針 + 狂犬病加強針"}}
+    ],
+    "cat": [
+      {"week": 6, "item": {"en":"FVRCP (1st)","zh-CN":"猫三联（第1针）","zh-TW":"貓三聯（第1針）"}},
+      {"week": 9, "item": {"en":"FVRCP (2nd)","zh-CN":"猫三联（第2针）","zh-TW":"貓三聯（第2針）"}},
+      {"week": 12, "item": {"en":"FVRCP (3rd) + FeLV","zh-CN":"猫三联（第3针）+ 白血病","zh-TW":"貓三聯（第3針）+ 白血病"}},
+      {"week": 16, "item": {"en":"Rabies","zh-CN":"狂犬病","zh-TW":"狂犬病"}},
+      {"week": 52, "item": {"en":"Annual booster + Rabies booster","zh-CN":"年度加强针 + 狂犬病加强针","zh-TW":"年度加強針 + 狂犬病加強針"}}
+    ],
+    "dewormingWeeks": [2, 4, 6, 8, 12, 16, 26, 52]
+  },
+  "importRules": [
+    {"country": {"en":"United States","zh-CN":"美国","zh-TW":"美國"}, "rabiesRequired": true, "minAgeWeeks": 12, "quarantineDays": 0, "note": {"en":"No federal quarantine for dogs from low-risk countries with valid rabies proof; CDC import form required since Aug 2024.","zh-CN":"来自低风险国家、持有效狂犬证明的犬无需联邦隔离；自2024年8月起需填写CDC进口表。","zh-TW":"來自低風險國家、持有效狂犬證明的犬無需聯邦隔離；自2024年8月起需填寫CDC進口表。"}},
+    {"country": {"en":"United Kingdom","zh-CN":"英国","zh-TW":"英國"}, "rabiesRequired": true, "minAgeWeeks": 12, "quarantineDays": 0, "note": {"en":"Requires microchip, rabies vaccination + waiting period, tapeworm treatment for dogs (1-5 days before arrival).","zh-CN":"需植入芯片、完成狂犬疫苗及等待期，犬类需在抵达前1-5天驱绦虫。","zh-TW":"需植入晶片、完成狂犬疫苗及等待期，犬類需在抵達前1-5天驅絛蟲。"}},
+    {"country": {"en":"Australia","zh-CN":"澳大利亚","zh-TW":"澳洲"}, "rabiesRequired": true, "minAgeWeeks": 12, "quarantineDays": 10, "note": {"en":"Mandatory post-arrival quarantine (typically 10 days) plus extensive pre-export testing window (up to 6 months).","zh-CN":"强制入境后隔离（通常10天），且出境前检测周期长达6个月。","zh-TW":"強制入境後隔離（通常10天），且出境前檢測週期長達6個月。"}},
+    {"country": {"en":"Japan","zh-CN":"日本","zh-TW":"日本"}, "rabiesRequired": true, "minAgeWeeks": 12, "quarantineDays": 0, "note": {"en":"Requires 2 rabies vaccinations + 180-day waiting period after blood test (advance notification mandatory).","zh-CN":"需完成2次狂犬疫苗接种+血检后180天等待期（须提前申报）。","zh-TW":"需完成2次狂犬疫苗接種+血檢後180天等待期（須提前申報）。"}},
+    {"country": {"en":"European Union","zh-CN":"欧盟","zh-TW":"歐盟"}, "rabiesRequired": true, "minAgeWeeks": 15, "quarantineDays": 0, "note": {"en":"EU pet passport or animal health certificate, microchip, rabies vaccine at least 21 days before travel.","zh-CN":"需欧盟宠物护照或动物健康证明、芯片，狂犬疫苗须在出行前至少21天完成。","zh-TW":"需歐盟寵物護照或動物健康證明、晶片，狂犬疫苗須在出行前至少21天完成。"}}
+  ]
+}

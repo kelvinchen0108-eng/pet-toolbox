@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page_title">Pet Age Toolbox — Convert, Plan, Protect</title>
+<meta name="description" content="Free pet age converter, calorie calculator, toxic food checker, vaccine schedule and travel rules — in English, 简体中文, 繁體中文.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">🐾</span>
+      <span class="brand-name" data-i18n="brand_name">Pet Age Toolbox</span>
+    </a>
+    <nav class="lang-switch" aria-label="Language">
+      <button data-lang="en" class="lang-btn is-active">EN</button>
+      <button data-lang="zh-CN" class="lang-btn">简中</button>
+      <button data-lang="zh-TW" class="lang-btn">繁中</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ AD: TOP BANNER ============ -->
+<div class="ad-slot ad-top" id="ad-top" aria-hidden="true"></div>
+
+<!-- ============ HERO / SIGNATURE: AGE TRANSLATOR ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow" data-i18n="hero_eyebrow">Free · No login · Works offline</p>
+      <h1 data-i18n="hero_title">How old is your pet, really?</h1>
+      <p class="hero-sub" data-i18n="hero_sub">A 7-year-old Great Dane and a 7-year-old tabby cat are not the same age. Translate it properly below.</p>
+    </div>
+
+    <div class="translator card" id="age-translator">
+      <div class="translator-grid">
+        <div class="field">
+          <label for="species" data-i18n="lbl_species">Species</label>
+          <select id="species">
+            <option value="dog" data-i18n="opt_dog">Dog</option>
+            <option value="cat" data-i18n="opt_cat">Cat</option>
+          </select>
+        </div>
+        <div class="field" id="size-field">
+          <label for="size" data-i18n="lbl_size">Size</label>
+          <select id="size">
+            <option value="small" data-i18n="opt_small">Small (&lt;9kg)</option>
+            <option value="medium" data-i18n="opt_medium">Medium (9–22kg)</option>
+            <option value="large" data-i18n="opt_large">Large (22–40kg)</option>
+            <option value="giant" data-i18n="opt_giant">Giant (&gt;40kg)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="years" data-i18n="lbl_years">Years</label>
+          <input type="number" id="years" min="0" max="30" value="3">
+        </div>
+        <div class="field">
+          <label for="months" data-i18n="lbl_months">Months</label>
+          <input type="number" id="months" min="0" max="11" value="0">
+        </div>
+      </div>
+
+      <div class="translator-result">
+        <div class="result-side">
+          <span class="result-label" data-i18n="result_pet_age">Pet age</span>
+          <span class="result-value mono" id="out-pet-age">3y 0m</span>
+        </div>
+        <div class="translator-arrow">≈</div>
+        <div class="result-side result-side--human">
+          <span class="result-label" data-i18n="result_human_age">Human-equivalent age</span>
+          <span class="result-value mono" id="out-human-age">28</span>
+        </div>
+      </div>
+      <p class="fine-print" data-i18n="age_fineprint">Estimates based on common veterinary growth curves. Individual breeds and health vary.</p>
+
+      <div class="batch-row">
+        <button class="btn btn-ghost" id="add-pet-btn" data-i18n="btn_add_pet">+ Add another pet (up to 3 free)</button>
+      </div>
+      <div id="batch-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE AD ============ -->
+<div class="marquee" id="ad-marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<!-- ============ TOOLS GRID ============ -->
+<section class="tools wrap" id="tools">
+
+  <div class="tools-main">
+
+    <!-- Calorie calculator -->
+    <article class="card tool-card" id="tool-calorie">
+      <h2 data-i18n="calorie_title">Daily feeding calories</h2>
+      <p class="tool-sub" data-i18n="calorie_sub">Based on weight, age, spay/neuter status and activity level.</p>
+      <div class="form-row">
+        <div class="field"><label data-i18n="lbl_weight">Weight (kg)</label><input type="number" id="cal-weight" value="5" min="0.3" step="0.1"></div>
+        <div class="field">
+          <label data-i18n="lbl_status">Life stage / status</label>
+          <select id="cal-status">
+            <option value="growth_puppy_kitten" data-i18n="status_growth">Puppy / kitten (growing)</option>
+            <option value="intact_adult" data-i18n="status_intact">Adult, not neutered</option>
+            <option value="neutered_adult" selected data-i18n="status_neutered">Adult, neutered/spayed</option>
+            <option value="weight_loss" data-i18n="status_loss">Needs weight loss</option>
+            <option value="weight_gain" data-i18n="status_gain">Needs weight gain</option>
+            <option value="active_working" data-i18n="status_active">Very active / working</option>
+            <option value="senior" data-i18n="status_senior">Senior</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="cal-run" data-i18n="btn_calculate">Calculate</button>
+      <div class="result-box" id="cal-result"></div>
+    </article>
+
+    <!-- Toxicity checker -->
+    <article class="card tool-card" id="tool-toxic">
+      <h2 data-i18n="toxic_title">Is it toxic to my pet?</h2>
+      <p class="tool-sub" data-i18n="toxic_sub">Search food, plants, and household items. Separate risk ratings for dogs and cats.</p>
+      <div class="form-row">
+        <input type="text" id="toxic-search" placeholder="" data-i18n-placeholder="toxic_placeholder">
+      </div>
+      <div class="result-box" id="toxic-result"></div>
+    </article>
+
+    <!-- Vaccine / deworming schedule -->
+    <article class="card tool-card" id="tool-vaccine">
+      <h2 data-i18n="vaccine_title">Vaccine & deworming timeline</h2>
+      <p class="tool-sub" data-i18n="vaccine_sub">Enter your pet's birth date to generate a simple schedule.</p>
+      <div class="form-row">
+        <div class="field"><label data-i18n="lbl_species2">Species</label>
+          <select id="vac-species">
+            <option value="dog" data-i18n="opt_dog">Dog</option>
+            <option value="cat" data-i18n="opt_cat">Cat</option>
+          </select>
+        </div>
+        <div class="field"><label data-i18n="lbl_birthdate">Birth date</label><input type="date" id="vac-birthdate"></div>
+      </div>
+      <button class="btn btn-primary" id="vac-run" data-i18n="btn_generate">Generate schedule</button>
+      <div class="result-box" id="vac-result"></div>
+      <p class="locked-hint" data-i18n="vaccine_locked_hint">🔒 Premium: export this as a printable PDF</p>
+    </article>
+
+    <!-- Monthly cost estimator -->
+    <article class="card tool-card" id="tool-cost">
+      <h2 data-i18n="cost_title">Monthly cost estimate</h2>
+      <p class="tool-sub" data-i18n="cost_sub">A rough budget for one pet's recurring expenses.</p>
+      <div class="form-row">
+        <div class="field"><label data-i18n="lbl_food_cost">Food / month</label><input type="number" id="cost-food" value="40"></div>
+        <div class="field"><label data-i18n="lbl_litter_cost">Litter / grooming</label><input type="number" id="cost-grooming" value="15"></div>
+        <div class="field"><label data-i18n="lbl_vet_cost">Vet / insurance</label><input type="number" id="cost-vet" value="35"></div>
+        <div class="field"><label data-i18n="lbl_extras_cost">Toys / extras</label><input type="number" id="cost-extras" value="10"></div>
+      </div>
+      <button class="btn btn-primary" id="cost-run" data-i18n="btn_estimate">Estimate</button>
+      <div class="result-box" id="cost-result"></div>
+      <p class="locked-hint" data-i18n="cost_locked_hint">🔒 Premium: multi-pet annual Excel report</p>
+    </article>
+
+    <!-- Import / travel rules -->
+    <article class="card tool-card" id="tool-import">
+      <h2 data-i18n="import_title">Pet travel & import rules</h2>
+      <p class="tool-sub" data-i18n="import_sub">Quick basics by destination country. Always confirm with the official authority before travel.</p>
+      <div class="form-row">
+        <select id="import-country"></select>
+      </div>
+      <div class="result-box" id="import-result"></div>
+      <p class="locked-hint" data-i18n="import_locked_hint">🔒 Premium: full compliance PDF (quarantine, crate sizing, banned items)</p>
+    </article>
+
+  </div>
+
+  <!-- ============ AD: SIDEBAR ============ -->
+  <aside class="ad-slot ad-sidebar" id="ad-sidebar" aria-hidden="true"></aside>
+
+</section>
+
+<!-- ============ PREMIUM ============ -->
+<section class="premium wrap" id="premium">
+  <div class="card premium-card">
+    <div class="premium-copy">
+      <p class="eyebrow" data-i18n="premium_eyebrow">One-time purchase · Lifetime</p>
+      <h2 data-i18n="premium_title">Go ad-free, forever, for one small payment</h2>
+      <ul class="premium-list">
+        <li data-i18n="premium_b1">Removes all ads sitewide, permanently</li>
+        <li data-i18n="premium_b2">Unlimited pets with cloud-saved profiles</li>
+        <li data-i18n="premium_b3">Printable PDF: full vaccine + deworming + check-up plan</li>
+        <li data-i18n="premium_b4">Full travel compliance PDF for any destination</li>
+        <li data-i18n="premium_b5">Multi-pet annual Excel cost report</li>
+        <li data-i18n="premium_b6">Custom weight-loss / weight-gain feeding plans</li>
+        <li data-i18n="premium_b7">Everything works fully offline</li>
+      </ul>
+    </div>
+    <div class="premium-buy">
+      <div class="price-row">
+        <span class="price-old mono" id="price-old">$4.99</span>
+        <span class="price-new mono" id="price-new">$2.99</span>
+      </div>
+      <p class="price-note" id="price-note" data-i18n="price_note">Limited-time price. Your price is locked in forever once purchased.</p>
+      <button class="btn btn-buy" id="buy-btn" data-i18n="btn_buy">Unlock Premium — one-time</button>
+      <button class="btn btn-ghost-sm" id="restore-btn" data-i18n="btn_restore">Restore a previous purchase</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAYWALL MODAL ============ -->
+<div class="modal-backdrop" id="paywall-modal" hidden>
+  <div class="modal card" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    <h3 data-i18n="modal_title">Unlock Premium</h3>
+    <p data-i18n="modal_body">You'll be taken to a secure Stripe checkout page. An email receipt and permanent unlock code will be issued automatically. You can optionally check a box to receive occasional product update emails — unchecked by default.</p>
+    <button class="btn btn-primary" id="modal-checkout" data-i18n="btn_continue">Continue to checkout</button>
+  </div>
+</div>
+
+<!-- ============ RESTORE MODAL ============ -->
+<div class="modal-backdrop" id="restore-modal" hidden>
+  <div class="modal card" role="dialog" aria-modal="true">
+    <button class="modal-close" id="restore-close" aria-label="Close">×</button>
+    <h3 data-i18n="restore_title">Restore purchase</h3>
+    <div class="field"><label data-i18n="lbl_restore_email">Purchase email</label><input type="email" id="restore-email"></div>
+    <div class="field"><label data-i18n="lbl_restore_order">Order number</label><input type="text" id="restore-order"></div>
+    <button class="btn btn-primary" id="restore-submit" data-i18n="btn_restore_submit">Restore access</button>
+    <p class="result-box" id="restore-result"></p>
+  </div>
+</div>
+
+<!-- ============ AD: BOTTOM BANNER ============ -->
+<div class="ad-slot ad-bottom" id="ad-bottom" aria-hidden="true"></div>
+
+<!-- ============ FOOTER / STATION LINKS ============ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-links">
+      <span data-i18n="footer_more">More toolboxes:</span>
+      <a href="https://example.com/student-toolbox" rel="noopener">🎓 <span data-i18n="footer_student">Study Abroad & Overseas Work Toolbox</span></a>
+      <a href="https://example.com/used-car-toolbox" rel="noopener">🚗 <span data-i18n="footer_car">Used Car Lifecycle & Valuation Toolbox</span></a>
+    </div>
+    <p class="footer-legal" data-i18n="footer_legal">© 2026 Pet Age Toolbox. Estimates only — not veterinary, legal, or financial advice.</p>
+  </div>
+</footer>
+
+<!-- Google AdSense Auto ads loader (vignette) — placeholder; admin enables via ads-config.json -->
+<script id="adsense-loader" type="text/plain" data-client-placeholder="ca-pub-XXXXXXXXXXXXXXXX"></script>
+
+<script src="/app.js"></script>
+</body>
+</html>

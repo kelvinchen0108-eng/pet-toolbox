@@ -1,0 +1,11 @@
+{
+  "currency": "usd",
+  "schedule": [
+    { "label": "launch_standard", "priceUsd": 4.99, "stripePriceId": "price_REPLACE_STANDARD_1", "startsAt": "2026-06-23T00:00:00Z", "durationDays": 3 },
+    { "label": "early_bird_1", "priceUsd": 2.99, "stripePriceId": "price_REPLACE_EARLYBIRD_1", "startsAt": "2026-06-26T00:00:00Z", "durationDays": 14 },
+    { "label": "standard_2", "priceUsd": 4.99, "stripePriceId": "price_REPLACE_STANDARD_1", "startsAt": "2026-07-10T00:00:00Z", "durationDays": 3 },
+    { "label": "early_bird_2", "priceUsd": 2.99, "stripePriceId": "price_REPLACE_EARLYBIRD_1", "startsAt": "2026-07-13T00:00:00Z", "durationDays": 30 }
+  ],
+  "userCountThresholdForCycle": 500,
+  "notes": "Add more entries to extend the cycle indefinitely. The Worker (workers/checkout.js) picks whichever entry's window contains 'now'. Existing purchasers keep the price/benefits active at their purchase time forever (enforced by storing priceUsd + label on the KV auth record, never re-checked against current schedule)."
+}

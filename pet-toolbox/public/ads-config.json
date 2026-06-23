@@ -1,0 +1,42 @@
+{
+  "muteForPremiumUsers": true,
+  "googleVignetteEnabled": false,
+  "privateInterstitial": {
+    "enabled": true,
+    "maxPerUserPerDay": 2,
+    "minSecondsBetweenShows": 600,
+    "suppressOnFirstVisit": true,
+    "creative": {
+      "imageUrl": "/assets/ads/placeholder-interstitial.jpg",
+      "linkUrl": "https://example.com",
+      "regions": ["*"]
+    }
+  },
+  "slots": {
+    "topBanner": {
+      "enabled": true,
+      "networkRotation": ["adsense", "ezoic", "propellerads", "private"],
+      "private": { "imageUrl": "/assets/ads/placeholder-top.jpg", "linkUrl": "https://example.com", "alt": "Sponsored" }
+    },
+    "sidebar": {
+      "enabled": true,
+      "networkRotation": ["adsense", "ezoic", "propellerads", "private"],
+      "private": { "imageUrl": "/assets/ads/placeholder-sidebar.jpg", "linkUrl": "https://example.com", "alt": "Sponsored" }
+    },
+    "bottomBanner": {
+      "enabled": true,
+      "networkRotation": ["adsense", "ezoic", "propellerads", "private"],
+      "private": { "imageUrl": "/assets/ads/placeholder-bottom.jpg", "linkUrl": "https://example.com", "alt": "Sponsored" }
+    },
+    "marquee": {
+      "enabled": true,
+      "text": { "en": "🐾 New: export your pet's vaccine schedule as PDF with Premium", "zh-CN": "🐾 新功能：升级高级版可导出疫苗计划 PDF", "zh-TW": "🐾 新功能：升級高級版可匯出疫苗計畫 PDF" },
+      "linkUrl": "#premium"
+    }
+  },
+  "network_ids": {
+    "adsense_client": "ca-pub-XXXXXXXXXXXXXXXX",
+    "ezoic_site_id": "",
+    "propellerads_zone_id": ""
+  }
+}

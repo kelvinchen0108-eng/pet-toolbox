@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pet Toolbox — Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  body{font-family:system-ui,sans-serif;background:#FAF8F3;color:#1C2620;margin:0;}
+  header{background:#2F4538;color:#fff;padding:14px 24px;font-weight:700;}
+  .wrap{max-width:980px;margin:0 auto;padding:20px;}
+  nav{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  nav button{padding:8px 14px;border:1px solid #2F4538;background:#fff;border-radius:8px;cursor:pointer;}
+  nav button.active{background:#2F4538;color:#fff;}
+  section{display:none;background:#fff;border:1px solid #E2D8C3;border-radius:10px;padding:18px;margin-bottom:14px;}
+  section.active{display:block;}
+  textarea{width:100%;min-height:260px;font-family:monospace;font-size:.85rem;padding:10px;border:1px solid #E2D8C3;border-radius:8px;}
+  input,button.action{padding:8px 10px;border:1px solid #E2D8C3;border-radius:8px;font-size:.9rem;}
+  button.action{background:#E08E45;border:none;color:#1C2620;font-weight:700;cursor:pointer;}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px;}
+  td,th{border-bottom:1px solid #E2D8C3;padding:6px 8px;text-align:left;}
+  .row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
+  .msg{font-size:.85rem;color:#7a7a6e;margin-top:8px;}
+</style>
+</head>
+<body>
+<header>🐾 Pet Age Toolbox — Admin Panel</header>
+<div class="wrap">
+  <nav>
+    <button data-tab="ads" class="active">Ads</button>
+    <button data-tab="pricing">Pricing</button>
+    <button data-tab="auth">Authorizations</button>
+    <button data-tab="subs">Subscribers</button>
+    <button data-tab="logs">Logs</button>
+  </nav>
+
+  <section id="tab-ads" class="active">
+    <h3>Ads configuration (ads-config.json)</h3>
+    <p class="msg">Edit the JSON directly — slot toggles, private creative URLs/links, marquee text, network IDs.</p>
+    <textarea id="ads-json"></textarea>
+    <div class="row"><button class="action" id="ads-load">Reload current</button><button class="action" id="ads-save">Save</button></div>
+    <div class="msg" id="ads-msg"></div>
+  </section>
+
+  <section id="tab-pricing">
+    <h3>Price schedule (pricing-schedule.json)</h3>
+    <p class="msg">Add entries to extend the early-bird/standard cycle. Existing purchasers always keep the price they paid.</p>
+    <textarea id="pricing-json"></textarea>
+    <div class="row"><button class="action" id="pricing-load">Reload current</button><button class="action" id="pricing-save">Save</button></div>
+    <div class="msg" id="pricing-msg"></div>
+  </section>
+
+  <section id="tab-auth">
+    <h3>Look up / revoke a purchase</h3>
+    <div class="row">
+      <input id="auth-email" placeholder="email@example.com">
+      <button class="action" id="auth-search-email">Search by email</button>
+    </div>
+    <div class="row">
+      <input id="auth-code" placeholder="authCode">
+      <button class="action" id="auth-search-code">Search by auth code</button>
+      <button class="action" id="auth-revoke" style="background:#C1473A;color:#fff">Revoke this auth code</button>
+    </div>
+    <pre id="auth-result" style="background:#FAF8F3;padding:10px;border-radius:8px;white-space:pre-wrap;font-size:.8rem;"></pre>
+  </section>
+
+  <section id="tab-subs">
+    <h3>Subscriber list (opted-in only)</h3>
+    <div class="row"><button class="action" id="subs-load">Load / refresh</button><button class="action" id="subs-export">Download CSV</button></div>
+    <table id="subs-table"><thead><tr><th>Email</th><th>Opted in at</th></tr></thead><tbody></tbody></table>
+  </section>
+
+  <section id="tab-logs">
+    <h3>Operation logs</h3>
+    <div class="row"><button class="action" id="logs-load">Load latest 100</button></div>
+    <table id="logs-table"><thead><tr><th>Time</th><th>Action</th><th>Details</th></tr></thead><tbody></tbody></table>
+  </section>
+</div>
+
+<script>
+document.querySelectorAll("nav button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById("tab-"+b.dataset.tab).classList.add("active");
+  });
+});
+
+async function call(action, params={}){
+  const resp = await fetch("/admin/api", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({action, ...params})});
+  return resp.json();
+}
+
+// Ads
+document.getElementById("ads-load").addEventListener("click", async ()=>{
+  const r = await call("get_ads_config");
+  const fallback = await fetch("/ads-config.json").then(r=>r.json());
+  document.getElementById("ads-json").value = JSON.stringify(r.value || fallback, null, 2);
+});
+document.getElementById("ads-save").addEventListener("click", async ()=>{
+  try{
+    const config = JSON.parse(document.getElementById("ads-json").value);
+    const r = await call("set_ads_config", {config});
+    document.getElementById("ads-msg").textContent = r.ok ? "Saved." : (r.error||"Error");
+  }catch(e){ document.getElementById("ads-msg").textContent = "Invalid JSON: "+e.message; }
+});
+
+// Pricing
+document.getElementById("pricing-load").addEventListener("click", async ()=>{
+  const r = await call("get_pricing_schedule");
+  const fallback = await fetch("/pricing-schedule.json").then(r=>r.json());
+  document.getElementById("pricing-json").value = JSON.stringify(r.value || fallback, null, 2);
+});
+document.getElementById("pricing-save").addEventListener("click", async ()=>{
+  try{
+    const schedule = JSON.parse(document.getElementById("pricing-json").value);
+    const r = await call("set_pricing_schedule", {schedule});
+    document.getElementById("pricing-msg").textContent = r.ok ? "Saved." : (r.error||"Error");
+  }catch(e){ document.getElementById("pricing-msg").textContent = "Invalid JSON: "+e.message; }
+});
+
+// Auth
+document.getElementById("auth-search-email").addEventListener("click", async ()=>{
+  const r = await call("lookup_auth", {email: document.getElementById("auth-email").value});
+  document.getElementById("auth-result").textContent = JSON.stringify(r, null, 2);
+});
+document.getElementById("auth-search-code").addEventListener("click", async ()=>{
+  const r = await call("lookup_auth", {authCode: document.getElementById("auth-code").value});
+  document.getElementById("auth-result").textContent = JSON.stringify(r, null, 2);
+});
+document.getElementById("auth-revoke").addEventListener("click", async ()=>{
+  if(!confirm("Revoke this auth code permanently?")) return;
+  const r = await call("revoke_auth", {authCode: document.getElementById("auth-code").value});
+  document.getElementById("auth-result").textContent = JSON.stringify(r, null, 2);
+});
+
+// Subscribers
+let lastSubs = [];
+document.getElementById("subs-load").addEventListener("click", async ()=>{
+  const r = await call("export_subscribers");
+  lastSubs = r.subscribers || [];
+  const tbody = document.querySelector("#subs-table tbody");
+  tbody.innerHTML = lastSubs.map(s=>`<tr><td>${s.email}</td><td>${s.optedInAt}</td></tr>`).join("");
+});
+document.getElementById("subs-export").addEventListener("click", ()=>{
+  const csv = "email,opted_in_at\n" + lastSubs.map(s=>`${s.email},${s.optedInAt}`).join("\n");
+  const blob = new Blob([csv], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "subscribers.csv";
+  a.click();
+});
+
+// Logs
+document.getElementById("logs-load").addEventListener("click", async ()=>{
+  const r = await call("list_logs", {limit:100});
+  const tbody = document.querySelector("#logs-table tbody");
+  tbody.innerHTML = (r.logs||[]).map(l=>`<tr><td>${l.at}</td><td>${l.action}</td><td>${JSON.stringify(l.details)}</td></tr>`).join("");
+});
+</script>
+</body>
+</html>
